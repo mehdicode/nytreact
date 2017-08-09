@@ -26,8 +26,9 @@ var helper = {
   },
 
   // This function posts new searches to our database.
-  saveArticle: function(text) {
-    return axios.post("/", { text: text });
+  saveArticle: function(data) {
+    console.log("helper cons"+data);
+    return axios.post("/", { title: data.title, date:data.date, url:data.url });
   }
 };
 

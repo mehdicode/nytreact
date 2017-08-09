@@ -17,7 +17,7 @@ const results = ({articles, handle}) => {
       <div>
         {articles.map(item => (
           
-         <div key={i} className="alert alert-info" role="alert"><h3 className='articleHeadline'><span className="label label-danger">{++i}</span><strong> {item.headline.main}</strong><span className="badge"><button onClick={() => handle(item)} type="submit" className="btn-right btn-danger navbar-btn">Save!</button></span></h3></div>
+         <div key={i} className="alert alert-info" role="alert"><h3 className='articleHeadline'><span className="label label-danger">{++i}</span><strong> {item.headline.main}</strong><span className="badge"><button onClick={() => handle(item)} type="submit" className="btn-right btn-danger navbar-btn" formMethod="post">Save!</button></span></h3></div>
         ))}
       </div>
   );

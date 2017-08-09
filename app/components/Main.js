@@ -36,18 +36,7 @@ var Main = React.createClass({
                     console.log(data);
 
                 
-                    // helpers.saveArticle(this.state.searchTerm).then(function() {
-                    // console.log("Updated!");
 
-                    // helpers.getSaved().then(function(response) {
-                    //     console.log("Current History", response.data);
-
-                    //     console.log("History", response.data);
-
-                    //     this.setState({ history: response.data });
-
-                    // }.bind(this));
-                    // }.bind(this));
                 }
             }.bind(this));
 
@@ -58,9 +47,20 @@ var Main = React.createClass({
            data.title = this.state.articleToSave.headline.main;
            data.date = this.state.articleToSave.pub_date;
            data.url =  this.state.articleToSave.web_url;
-           helpers.saveArticle(data).then(function() {
-             console.log("Updated!")
-           });
+
+
+            helpers.saveArticle(data).then(function() {
+            console.log("Updated!");
+
+            // helpers.getSaved().then(function(response) {
+            //     console.log("Current History", response.data);
+
+            //     console.log("History", response.data);
+
+            //     this.setState({ history: response.data });
+
+            // }.bind(this));
+            }.bind(this));
 
 
         }

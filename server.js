@@ -5,7 +5,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 
 // Require NY schema
-var Click = require("./models/ny");
+var History = require("./models/ny");
 
 // Create a new express app
 var app = express();
@@ -37,53 +37,46 @@ db.once("open", function() {
 
 // -------------------------------------------------
 
-// // Main "/" Route. This will redirect the user to our rendered React application
-// app.get("/", function(req, res) {
-//   res.sendFile(__dirname + "/public/index.html");
-// });
+// Main "/" Route. This will redirect the user to our rendered React application
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
-// // This is the route we will send GET requests to retrieve our most recent click data.
-// // We will call this route the moment our page gets rendered
-// app.get("/api", function(req, res) {
 
-//   // This GET request will search for the latest clickCount
-//   Click.find({}).exec(function(err, doc) {
+app.get("/", function(req, res) {
 
-//     if (err) {
-//       console.log(err);
-//     }
-//     else {
-//       res.send(doc);
-//     }
-//   });
-// });
+History.find({}).sort([
+  ["date", "descending"]
+]).limit(20).exec(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      res.send(doc)
+    }
+  })
+});
 
-// // This is the route we will send POST requests to save each click.
-// // We will call this route the moment the "click" or "reset" button is pressed.
-// app.post("/api", function(req, res) {
+// This is the route we will send POST requests to save each click.
+// We will call this route the moment the "click" or "reset" button is pressed.
+app.post("/", function(req, res) {
 
-//   var clickID = req.body.clickID;
-//   var clicks = parseInt(req.body.clicks);
+ console.log(req.body);
 
-//   // Note how this route utilizes the findOneAndUpdate function to update the clickCount
-//   // { upsert: true } is an optional object we can pass into the findOneAndUpdate method
-//   // If included, Mongoose will create a new document matching the description if one is not found
-//   Click.findOneAndUpdate({
-//     clickID: clickID
-//   }, {
-//     $set: {
-//       clicks: clicks
-//     }
-//   }, { upsert: true }).exec(function(err) {
-
-//     if (err) {
-//       console.log(err);
-//     }
-//     else {
-//       res.send("Updated Click Count!");
-//     }
-//   });
-// });
+  History.create({
+    title: req.body.title,
+    date: req.body.date,
+    url:req.body.url
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      // res.send("Saved Search");
+      console.log("saved")
+    }
+  });
+});
 
 // -------------------------------------------------
 
